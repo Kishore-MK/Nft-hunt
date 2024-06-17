@@ -1,4 +1,4 @@
-use starknet::ContactAddress
+use starknet::ContractAddress;
 const TIME_BETWEEN_ACTIONS: u64 = 120;
 
 #[derive(Copy, Drop, Serde)]
