@@ -4,6 +4,7 @@ mod systems {
 
 mod models {
     mod game;
+    mod player;
 }
 
 mod tests {
