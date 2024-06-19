@@ -5,6 +5,9 @@ mod systems {
 mod models {
     mod game;
     mod player;
+    mod move;
+    mod counter;
+    mod health;
 }
 
 mod tests {

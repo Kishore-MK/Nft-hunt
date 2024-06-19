@@ -5,20 +5,20 @@ const TIME_BETWEEN_ACTIONS: u64 = 120;
 #[dojo::model]
 struct Player {
     #[key]
-    address: starknet::ContractAddress,
-    player: felt252,
-    socre: u64
+    player: ContractAddress,
+    character: Character,
+    score: u64
 }
 
 #[derive(Serde, Copy, Drop, Introspect)]
 enum Character {
-    Player,
+    Hunter,
 }
 
 impl CharacterIntoFelt252 of Into<Character, felt252> {
     fn into(self: Character) -> felt252 {
         match self {
-            Character::Player =>1,
+            Character::Hunter =>1,
         }
     }
 }
