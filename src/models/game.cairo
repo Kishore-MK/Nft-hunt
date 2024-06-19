@@ -9,7 +9,7 @@ struct Game {
     status: GameStatus
 }
 
-#[derive(Serde, Copy, Drop, Introspect, PartialEq, Print)]
+#[derive(Serde, Copy, Drop, Introspect, PartialEq)]
 // Define an enum representing different states of a game
 enum GameStatus {
     Lobby: (),
