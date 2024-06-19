@@ -3,8 +3,8 @@ use dojo::world::{IWorldDispatcher, IWorldDispatcherImpl, IWorldDispatcherTrait}
 
 #[dojo::interface]
 trait IActions{
-    fn spawn(character: Character);
-    fn action(Move: MoveType);
+    fn spawn(ref world: IWorldDispatcher,character: Character);
+    fn action(ref world: IWorldDispatcher,Move: MoveType);
 }
 #[dojo::contract]
 mod actions {
@@ -32,7 +32,7 @@ mod actions {
 
     #[abi(embed_v0)]
     impl ActionsImpl of IActions<ContractState> {
-        fn spawn(world: IWorldDispatcher, character: Character) {
+        fn spawn(ref world: IWorldDispatcher, character: Character) {
             // Get the address of the current caller, possibly the player's address.
             let player = get_caller_address();
             let mut attack: u16 = 0;
@@ -80,7 +80,7 @@ mod actions {
             set!(world, (Counter { entityId: COUNTER_ID, counter: gameCounter }));
         }
 
-        fn action(world: IWorldDispatcher, Move: MoveType) {
+        fn action(ref world: IWorldDispatcher, Move: MoveType) {
             let player = get_caller_address();
             let (mut playerCharacter, mut gameStatus) = get!(world, player, (Player, Game));
 
@@ -136,7 +136,7 @@ mod actions {
                         CharacterAction {
                             player: contract_address_const::<SLIME_ID>(),
                             action: MoveType::attack,
-                            moveValue: slimeSkill.attack
+                            moveValue: slimeMove.attack
                         }
                     ))
                 );
