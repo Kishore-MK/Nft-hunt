@@ -60,6 +60,28 @@
   },
   {
     "type": "enum",
+    "name": "dojo_starter::models::walk::Direction",
+    "variants": [
+      {
+        "name": "Left",
+        "type": "()"
+      },
+      {
+        "name": "Right",
+        "type": "()"
+      },
+      {
+        "name": "Up",
+        "type": "()"
+      },
+      {
+        "name": "Down",
+        "type": "()"
+      }
+    ]
+  },
+  {
+    "type": "enum",
     "name": "dojo_starter::models::player::Character",
     "variants": [
       {
@@ -86,6 +108,18 @@
     "type": "interface",
     "name": "dojo_starter::systems::actions::IActions",
     "items": [
+      {
+        "type": "function",
+        "name": "moved",
+        "inputs": [
+          {
+            "name": "direction",
+            "type": "dojo_starter::models::walk::Direction"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
       {
         "type": "function",
         "name": "spawn",
@@ -201,6 +235,23 @@
   },
   {
     "type": "event",
+    "name": "dojo_starter::systems::actions::actions::Moved",
+    "kind": "struct",
+    "members": [
+      {
+        "name": "player",
+        "type": "core::starknet::contract_address::ContractAddress",
+        "kind": "data"
+      },
+      {
+        "name": "direction",
+        "type": "dojo_starter::models::walk::Direction",
+        "kind": "data"
+      }
+    ]
+  },
+  {
+    "type": "event",
     "name": "dojo_starter::systems::actions::actions::Event",
     "kind": "enum",
     "variants": [
@@ -212,6 +263,11 @@
       {
         "name": "CharacterAction",
         "type": "dojo_starter::systems::actions::actions::CharacterAction",
+        "kind": "nested"
+      },
+      {
+        "name": "PositionAction",
+        "type": "dojo_starter::systems::actions::actions::Moved",
         "kind": "nested"
       }
     ]

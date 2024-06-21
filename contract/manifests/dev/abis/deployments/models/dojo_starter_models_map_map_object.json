@@ -319,18 +319,8 @@
   },
   {
     "type": "impl",
-    "name": "playerImpl",
-    "interface_name": "dojo_starter::models::player::Iplayer"
-  },
-  {
-    "type": "enum",
-    "name": "dojo_starter::models::player::Character",
-    "variants": [
-      {
-        "name": "Hunter",
-        "type": "()"
-      }
-    ]
+    "name": "map_objectImpl",
+    "interface_name": "dojo_starter::models::map::Imap_object"
   },
   {
     "type": "struct",
@@ -348,19 +338,11 @@
   },
   {
     "type": "struct",
-    "name": "dojo_starter::models::player::Player",
+    "name": "dojo_starter::models::map::MapObject",
     "members": [
       {
         "name": "player",
         "type": "core::starknet::contract_address::ContractAddress"
-      },
-      {
-        "name": "character",
-        "type": "dojo_starter::models::player::Character"
-      },
-      {
-        "name": "score",
-        "type": "core::integer::u64"
       },
       {
         "name": "position",
@@ -370,7 +352,7 @@
   },
   {
     "type": "interface",
-    "name": "dojo_starter::models::player::Iplayer",
+    "name": "dojo_starter::models::map::Imap_object",
     "items": [
       {
         "type": "function",
@@ -378,7 +360,7 @@
         "inputs": [
           {
             "name": "model",
-            "type": "dojo_starter::models::player::Player"
+            "type": "dojo_starter::models::map::MapObject"
           }
         ],
         "outputs": [],
@@ -388,7 +370,7 @@
   },
   {
     "type": "event",
-    "name": "dojo_starter::models::player::player::Event",
+    "name": "dojo_starter::models::map::map_object::Event",
     "kind": "enum",
     "variants": []
   }

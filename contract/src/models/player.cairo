@@ -1,14 +1,18 @@
 use starknet::ContractAddress;
-const TIME_BETWEEN_ACTIONS: u64 = 120;
-
+use dojo_starter::models::position::Position;
+use dojo_starter::models::walk::Direction;
 #[derive(Copy, Drop, Serde)]
 #[dojo::model]
 struct Player {
     #[key]
     player: ContractAddress,
     character: Character,
-    score: u64
+    score: u64,
+    position: Position,
+    
 }
+
+
 
 #[derive(Serde, Copy, Drop, Introspect)]
 enum Character {

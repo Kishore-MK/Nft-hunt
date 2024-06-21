@@ -14,7 +14,8 @@ struct Game {
 enum GameStatus {
     Lobby: (),
     InProgress: (),
-    Lost: ()
+    Lost: (),
+    Won: ()
 }
 
 impl GameStatusFelt252 of Into<GameStatus, felt252> {
@@ -23,7 +24,8 @@ impl GameStatusFelt252 of Into<GameStatus, felt252> {
         match self {
             GameStatus::Lobby => 1,
             GameStatus::InProgress => 2,
-            GameStatus::Lost => 3
+            GameStatus::Lost => 3,
+            GameStatus::Won => 4
         }
     }
 }

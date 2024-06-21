@@ -13,19 +13,20 @@ move = "./scripts/move.sh"
 
 [dependencies]
 dojo = { git = "https://github.com/dojoengine/dojo", tag = "v0.7.1" }
+starknet = "2.6.3"
 
-[[target.dojo]]
+[[target.dojo]] 
+[[target.starknet-contract]]
 
 [tool.dojo]
 initializer_class_hash = "0xbeef"
 
 [tool.dojo.env]
-rpc_url = "https://api.cartridge.gg/x/four/katana"
+rpc_url = "https://api.cartridge.gg/x/nfthunt/katana/"
 # Default account for katana with seed = 0
-account_address = "0x25d55235a7a0bfcd20f8ef7db505cac095170519e9f649f82269f47bb4dfe3"
-private_key = "0x5f40f2d47810e45771299d92be8b595801bbdf25aef6a38ac92c51a4c700e05"
+account_address = "0x730e16cb0104dd30996082de23488ef7c36e78061ad5d34cc255c48ede04313"
+private_key = "0x7fcc2db753d5830c5d9c28b37dbc65a5a39b1d1ea8de546f50f087ed64acd3e"
 world_address = "0x00b4079627ebab1cd3cf9fd075dda1ad2454a7a448bf659591f259efa2519b18"  # Update this line with your world address
-
 
 [tool.dojo.world.socials]
 x = "https://x.com/ohayo_dojo"

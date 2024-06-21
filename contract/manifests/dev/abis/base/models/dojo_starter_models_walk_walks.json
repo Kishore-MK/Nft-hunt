@@ -319,58 +319,70 @@
   },
   {
     "type": "impl",
-    "name": "playerImpl",
-    "interface_name": "dojo_starter::models::player::Iplayer"
+    "name": "walksImpl",
+    "interface_name": "dojo_starter::models::walk::Iwalks"
   },
   {
     "type": "enum",
-    "name": "dojo_starter::models::player::Character",
+    "name": "dojo_starter::models::walk::Direction",
     "variants": [
       {
-        "name": "Hunter",
+        "name": "Left",
+        "type": "()"
+      },
+      {
+        "name": "Right",
+        "type": "()"
+      },
+      {
+        "name": "Up",
+        "type": "()"
+      },
+      {
+        "name": "Down",
+        "type": "()"
+      }
+    ]
+  },
+  {
+    "type": "enum",
+    "name": "core::bool",
+    "variants": [
+      {
+        "name": "False",
+        "type": "()"
+      },
+      {
+        "name": "True",
         "type": "()"
       }
     ]
   },
   {
     "type": "struct",
-    "name": "dojo_starter::models::position::Position",
-    "members": [
-      {
-        "name": "x",
-        "type": "core::integer::u32"
-      },
-      {
-        "name": "y",
-        "type": "core::integer::u32"
-      }
-    ]
-  },
-  {
-    "type": "struct",
-    "name": "dojo_starter::models::player::Player",
+    "name": "dojo_starter::models::walk::Walks",
     "members": [
       {
         "name": "player",
         "type": "core::starknet::contract_address::ContractAddress"
       },
       {
-        "name": "character",
-        "type": "dojo_starter::models::player::Character"
+        "name": "remaining",
+        "type": "core::integer::u8"
       },
       {
-        "name": "score",
-        "type": "core::integer::u64"
+        "name": "last_direction",
+        "type": "dojo_starter::models::walk::Direction"
       },
       {
-        "name": "position",
-        "type": "dojo_starter::models::position::Position"
+        "name": "can_move",
+        "type": "core::bool"
       }
     ]
   },
   {
     "type": "interface",
-    "name": "dojo_starter::models::player::Iplayer",
+    "name": "dojo_starter::models::walk::Iwalks",
     "items": [
       {
         "type": "function",
@@ -378,7 +390,7 @@
         "inputs": [
           {
             "name": "model",
-            "type": "dojo_starter::models::player::Player"
+            "type": "dojo_starter::models::walk::Walks"
           }
         ],
         "outputs": [],
@@ -388,7 +400,7 @@
   },
   {
     "type": "event",
-    "name": "dojo_starter::models::player::player::Event",
+    "name": "dojo_starter::models::walk::walks::Event",
     "kind": "enum",
     "variants": []
   }

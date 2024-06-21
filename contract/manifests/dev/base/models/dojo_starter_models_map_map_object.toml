@@ -1,0 +1,15 @@
+kind = "DojoModel"
+class_hash = "0x20ad7a1cf6e4f304df3826e11188fcdac039c281f82dd5744206155ebe03fa3"
+original_class_hash = "0x20ad7a1cf6e4f304df3826e11188fcdac039c281f82dd5744206155ebe03fa3"
+abi = "manifests/dev/abis/base/models/dojo_starter_models_map_map_object.json"
+name = "dojo_starter::models::map::map_object"
+
+[[members]]
+name = "player"
+type = "ContractAddress"
+key = true
+
+[[members]]
+name = "position"
+type = "Position"
+key = false

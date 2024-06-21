@@ -319,23 +319,13 @@
   },
   {
     "type": "impl",
-    "name": "playerImpl",
-    "interface_name": "dojo_starter::models::player::Iplayer"
+    "name": "treasureImpl",
+    "interface_name": "dojo_starter::models::treasure::Itreasure"
   },
   {
     "type": "enum",
-    "name": "dojo_starter::models::player::Character",
+    "name": "dojo_starter::models::treasure::Location",
     "variants": [
-      {
-        "name": "Hunter",
-        "type": "()"
-      }
-    ]
-  },
-  {
-    "type": "struct",
-    "name": "dojo_starter::models::position::Position",
-    "members": [
       {
         "name": "x",
         "type": "core::integer::u32"
@@ -347,30 +337,40 @@
     ]
   },
   {
+    "type": "enum",
+    "name": "dojo_starter::models::treasure::TreasureStatus",
+    "variants": [
+      {
+        "name": "claimed",
+        "type": "()"
+      },
+      {
+        "name": "not_claimed",
+        "type": "()"
+      }
+    ]
+  },
+  {
     "type": "struct",
-    "name": "dojo_starter::models::player::Player",
+    "name": "dojo_starter::models::treasure::Treasure",
     "members": [
       {
         "name": "player",
         "type": "core::starknet::contract_address::ContractAddress"
       },
       {
-        "name": "character",
-        "type": "dojo_starter::models::player::Character"
+        "name": "location",
+        "type": "dojo_starter::models::treasure::Location"
       },
       {
-        "name": "score",
-        "type": "core::integer::u64"
-      },
-      {
-        "name": "position",
-        "type": "dojo_starter::models::position::Position"
+        "name": "claim",
+        "type": "dojo_starter::models::treasure::TreasureStatus"
       }
     ]
   },
   {
     "type": "interface",
-    "name": "dojo_starter::models::player::Iplayer",
+    "name": "dojo_starter::models::treasure::Itreasure",
     "items": [
       {
         "type": "function",
@@ -378,7 +378,7 @@
         "inputs": [
           {
             "name": "model",
-            "type": "dojo_starter::models::player::Player"
+            "type": "dojo_starter::models::treasure::Treasure"
           }
         ],
         "outputs": [],
@@ -388,7 +388,7 @@
   },
   {
     "type": "event",
-    "name": "dojo_starter::models::player::player::Event",
+    "name": "dojo_starter::models::treasure::treasure::Event",
     "kind": "enum",
     "variants": []
   }
