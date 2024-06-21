@@ -1,4 +1,4 @@
-use dojo_starter::models::{player::{Character},move::MoveType, walk::Direction};
+use dojo_starter::models::{player::{Character},move::MoveType, walk::Direction, treasure::{Treasure,Location}};
 use dojo_starter::models::position::Position;
 
 
@@ -10,7 +10,7 @@ use dojo_starter::models::map::MapTraits;
 trait IActions{
     fn moved(ref world: IWorldDispatcher, direction: Direction);
     fn spawn(ref world: IWorldDispatcher,character: Character);
-    fn action(ref world: IWorldDispatcher,Move: MoveType);
+    fn action(ref world: IWorldDispatcher,Move: MoveType, location: Location,position: Position);
     
 }
 #[dojo::contract]
@@ -112,9 +112,9 @@ mod actions {
         }
         
 
-        fn action(ref world: IWorldDispatcher, Move: MoveType) {
+        fn action(ref world: IWorldDispatcher, Move: MoveType, location: Location,position: Position) {
             let player = get_caller_address();
-            let (mut playerCharacter, mut gameStatus) = get!(world, player, (Player, Game));
+            let (mut playerCharacter, mut gameStatus) = get!(world, player,(Player, Game));
 
             let (mut playerHealth, playerMove) = get!(
                 world, (player, gameStatus.entityId), (Health, Move)
@@ -145,7 +145,7 @@ mod actions {
                         set!(world, (playerCharacter, gameStatus))
                     }
 
-                    if(player.position.x<=Location.x+10 && player.position.y<=Location.y+10 && player.position.y<=Location.z+10 && player.position.x>=Location.x-10 && player.position.y>=Location.y-10 && player.position.y>=Location.y-10 && player.position.y>=Location.z-10){
+                    if(position.x <= location.x+10 && position.y <= location.y+10 && position.y<=location.z+10 && position.x>=location.x-10 && position.y>=location.y-10 && position.y>=location.y-10 && position.y>=location.z-10){
                         if treasureHealth.health > playerMove.attack {
                             treasureHealth.health -= playerMove.attack
                         } else {
@@ -156,7 +156,7 @@ mod actions {
                         }
 
                     }
-                    set!(world, (slimeHealth))
+                    set!(world, (slimeHealth));
                     set!(world, (treasureHealth))
                 },
                 

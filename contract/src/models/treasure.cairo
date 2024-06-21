@@ -12,7 +12,7 @@ struct Treasure {
 }
 
 #[derive(Serde, Copy, Drop, Introspect)]
-enum Location{
+struct Location{
     x:u32,
     y:u32,
     z:u32
