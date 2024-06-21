@@ -18,7 +18,7 @@ mod actions {
     use super::{IActions};
     use starknet::{ContractAddress, get_caller_address, contract_address_const};
     use dojo_starter::models::{
-        health::Health, player::{Player, Character},move::{Move,MoveType},game::{Game, GameStatus, GameStatusImplTrait}, counter::{Counter}, treasure::{Treasure,Location},map::Map,walk::Direction
+        health::Health, player::{Player, Character},move::{Move,MoveType},game::{Game, GameStatus, GameStatusImplTrait}, counter::{Counter}, treasure::{Treasure,TreasureStatus,Location},map::Map,walk::Direction
     };
     use dojo_starter::token::erc20::ERC20::{mint};
     use dojo_starter::models::position::{Position , next_position};
@@ -70,7 +70,7 @@ mod actions {
                 }
             }
             let pos=Position{x:0,y:0,z:0};
-
+            let loc=Location{x:-20,y:14,z:0};
             set!(
                 world,
                 (
@@ -78,6 +78,7 @@ mod actions {
                     Game { player, entityId: gameCounter, status: GameStatus::InProgress },
                     Health { entityId: player, gameId: gameCounter, health: 100 },
                     Move { entityId: player, gameId: gameCounter, attack, healing },
+                    Treasure {player, location: loc, claim: TreasureStatus::not_claimed},
                 )
             );
 
@@ -115,7 +116,7 @@ mod actions {
         fn action(ref world: IWorldDispatcher, Move: MoveType, location: Location,position: Position) {
             let player = get_caller_address();
             let (mut playerCharacter, mut gameStatus) = get!(world, player,(Player, Game));
-
+            let mut treasure_status = get!(Treasure);
             let (mut playerHealth, playerMove) = get!(
                 world, (player, gameStatus.entityId), (Health, Move)
             );
@@ -152,7 +153,8 @@ mod actions {
                             treasureHealth.health = 0;
                             playerCharacter.score += 100;
                             gameStatus.status = GameStatus::Won;
-                            set!(world, (playerCharacter, gameStatus))
+                            treasure_status.claim= TreasureStatus::claimed;
+                            set!(world, (playerCharacter, gameStatus,treasure_status))
                         }
 
                     }

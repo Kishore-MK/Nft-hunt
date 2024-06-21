@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 677004d3fce8a8843bf478857bb1acd4
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - slashAnimPrefab: {fileID: 2859243488567805539, guid: 4a82c50ddca40bc00b841127655bd2a4, type: 3}
+  - slashAnimSpawnPoint: {instanceID: 0}
+  - weaponCollider: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
