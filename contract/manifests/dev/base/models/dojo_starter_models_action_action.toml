@@ -1,0 +1,20 @@
+kind = "DojoModel"
+class_hash = "0x32b67ac89ae17ac4cb0a4db5756c2777cfd4ce891c3833da12f10e7a84939c3"
+original_class_hash = "0x32b67ac89ae17ac4cb0a4db5756c2777cfd4ce891c3833da12f10e7a84939c3"
+abi = "manifests/dev/abis/base/models/dojo_starter_models_action_action.json"
+name = "dojo_starter::models::action::action"
+
+[[members]]
+name = "entityId"
+type = "ContractAddress"
+key = true
+
+[[members]]
+name = "attack"
+type = "u16"
+key = false
+
+[[members]]
+name = "healing"
+type = "u16"
+key = false

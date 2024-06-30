@@ -1,0 +1,25 @@
+kind = "DojoModel"
+class_hash = "0x7ceb5d8ed5e8b795cf17a60532691c0beccd6aae3171a482d7e34b0d61f4741"
+original_class_hash = "0x7ceb5d8ed5e8b795cf17a60532691c0beccd6aae3171a482d7e34b0d61f4741"
+abi = "manifests/dev/abis/base/models/dojo_starter_models_walk_walks.json"
+name = "dojo_starter::models::walk::walks"
+
+[[members]]
+name = "player"
+type = "ContractAddress"
+key = true
+
+[[members]]
+name = "remaining"
+type = "u8"
+key = false
+
+[[members]]
+name = "last_direction"
+type = "Direction"
+key = false
+
+[[members]]
+name = "can_move"
+type = "bool"
+key = false

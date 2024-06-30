@@ -1,5 +1,4 @@
 use starknet::ContractAddress;
-use dojo_starter::models::position::Position;
 use dojo_starter::models::walk::Direction;
 #[derive(Copy, Drop, Serde)]
 #[dojo::model]
@@ -7,8 +6,7 @@ struct Player {
     #[key]
     player: ContractAddress,
     character: Character,
-    score: u64,
-    position: Position,
+    score: u64
     
 }
 

@@ -1,16 +1,15 @@
-use dojo_starter::models::{player::{Character},move::MoveType, walk::Direction, treasure::{Treasure,Location}};
-use dojo_starter::models::position::Position;
+use dojo_starter::models::{player::{Character},action::ActionType, walk::Direction, treasure::{Treasure,Location}};
+
 
 
 use dojo::world::{IWorldDispatcher, IWorldDispatcherImpl, IWorldDispatcherTrait};
 
-use dojo_starter::models::map::MapTraits;
 
 #[dojo::interface]
 trait IActions{
-    fn moved(ref world: IWorldDispatcher, direction: Direction);
+    // fn moved(ref world: IWorldDispatcher, direction: Direction);
     fn spawn(ref world: IWorldDispatcher,character: Character);
-    fn action(ref world: IWorldDispatcher,Move: MoveType, location: Location,position: Position);
+    fn action(ref world: IWorldDispatcher,Action: ActionType, location: Location);
     
 }
 #[dojo::contract]
@@ -18,10 +17,9 @@ mod actions {
     use super::{IActions};
     use starknet::{ContractAddress, get_caller_address, contract_address_const};
     use dojo_starter::models::{
-        health::Health, player::{Player, Character},move::{Move,MoveType},game::{Game, GameStatus, GameStatusImplTrait}, counter::{Counter}, treasure::{Treasure,TreasureStatus,Location},map::Map,walk::Direction
+        health::Health, player::{Player, Character},action::{Action, ActionType},game::{Game, GameStatus, GameStatusImplTrait}, counter::{Counter}, treasure::{Treasure,TreasureStatus,Location},walk::Direction
     };
-    use dojo_starter::token::erc20::ERC20::{mint};
-    use dojo_starter::models::position::{Position , next_position};
+ 
     // use dojo::world::{IWorldDispatcher, IWorldDispatcherImpl, IWorldDispatcherTrait};
 
 
@@ -38,6 +36,7 @@ mod actions {
     
     #[derive(Drop, Serde, starknet::Event)]
     struct Moved {
+        #[key]
         player: ContractAddress,
         direction: Direction
     }
@@ -45,9 +44,10 @@ mod actions {
 
     #[derive(Drop, Serde, starknet::Event)]
     struct CharacterAction {
+        #[key]
         player: ContractAddress,
-        action: MoveType,
-        moveValue: u16
+        action: ActionType,
+        ActionValue: u16
     }
 
     #[abi(embed_v0)]
@@ -69,35 +69,20 @@ mod actions {
                     healing = 25;
                 }
             }
-            let pos=Position{x:0,y:0,z:0};
-            let loc=Location{x:-20,y:14,z:0};
+           
+            let loc=Location{x:20,y:14,z:0};
             set!(
                 world,
                 (
-                    Player { player, character, score: playerStatus.score,position: pos },
+                    Player { player, character, score: playerStatus.score },
                     Game { player, entityId: gameCounter, status: GameStatus::InProgress },
                     Health { entityId: player, gameId: gameCounter, health: 100 },
-                    Move { entityId: player, gameId: gameCounter, attack, healing },
+                    Action { entityId: player, attack, healing },
                     Treasure {player, location: loc, claim: TreasureStatus::not_claimed},
                 )
             );
 
-            set!(
-                world,
-                (
-                    Health {
-                        entityId: contract_address_const::<SLIME_ID>(),
-                        gameId: gameCounter,
-                        health: 60
-                    },
-                    Move {
-                        entityId: contract_address_const::<SLIME_ID>(),
-                        gameId: gameCounter,
-                        healing: 10,
-                        attack: 20,
-                    },
-                )
-            );
+           
             set!(
                 world,
                 (
@@ -113,18 +98,18 @@ mod actions {
         }
         
 
-        fn action(ref world: IWorldDispatcher, Move: MoveType, location: Location,position: Position) {
+        fn action(ref world: IWorldDispatcher, Action: ActionType, location: Location) {
             let player = get_caller_address();
-            let (mut playerCharacter, mut gameStatus) = get!(world, player,(Player, Game));
-            let mut treasure_status = get!(Treasure);
-            let (mut playerHealth, playerMove) = get!(
-                world, (player, gameStatus.entityId), (Health, Move)
+            let (mut playerCharacter, mut gameStatus, mut treasure_status) = get!(world, player,(Player, Game, Treasure));
+
+            let (mut playerHealth, playerAction) = get!(
+                world, (player, gameStatus.entityId), (Health, Action)
             );
 
-            let (mut slimeHealth, slimeMove) = get!(
+            let (mut slimeHealth, slimeAction) = get!(
                 world,
                 (contract_address_const::<SLIME_ID>(), gameStatus.entityId),
-                (Health, Move)
+                (Health, Action)
             );
 
             let mut treasureHealth = get!(
@@ -134,45 +119,34 @@ mod actions {
             );
 
             gameStatus.assert_in_progress();
-            let mut moveValue: u16 = 0;
-            match Move {
-                MoveType::attack => {
-                    moveValue = playerMove.attack;
-                    if slimeHealth.health > playerMove.attack {
-                        slimeHealth.health -= playerMove.attack
+            let mut ActionValue: u16 = 0;
+            match Action {
+                ActionType::attack => {
+                    ActionValue = playerAction.attack;
+                    if slimeHealth.health > playerAction.attack {
+                        slimeHealth.health -= playerAction.attack
                     } else {
                         slimeHealth.health = 0;
                         playerCharacter.score += 10;
                         set!(world, (playerCharacter, gameStatus))
                     }
 
-                    if(position.x <= location.x+10 && position.y <= location.y+10 && position.y<=location.z+10 && position.x>=location.x-10 && position.y>=location.y-10 && position.y>=location.y-10 && position.y>=location.z-10){
-                        if treasureHealth.health > playerMove.attack {
-                            treasureHealth.health -= playerMove.attack
-                        } else {
-                            treasureHealth.health = 0;
-                            playerCharacter.score += 100;
-                            gameStatus.status = GameStatus::Won;
-                            treasure_status.claim= TreasureStatus::claimed;
-                            set!(world, (playerCharacter, gameStatus,treasure_status))
-                        }
-
-                    }
+                    
                     set!(world, (slimeHealth));
                     set!(world, (treasureHealth))
                 },
                 
-                MoveType::healing => {
-                    moveValue = playerMove.healing;
-                    playerHealth.health += playerMove.healing;
+                ActionType::healing => {
+                    ActionValue = playerAction.healing;
+                    playerHealth.health += playerAction.healing;
                     set!(world, (playerHealth))
                 }
             }
-            emit!(world,(Event::CharacterAction(CharacterAction { player, action: Move, moveValue })));
+            emit!(world,(Event::CharacterAction(CharacterAction { player, action: Action, ActionValue })));
 
             if slimeHealth.health > 0 {
-                if playerHealth.health > slimeMove.attack {
-                    playerHealth.health -= slimeMove.attack;
+                if playerHealth.health > slimeAction.attack {
+                    playerHealth.health -= slimeAction.attack;
                 } else {
                     playerHealth.health = 0;
                     gameStatus.status = GameStatus::Lost;
@@ -185,8 +159,8 @@ mod actions {
                     (Event::CharacterAction(
                         CharacterAction {
                             player: contract_address_const::<SLIME_ID>(),
-                            action: MoveType::attack,
-                            moveValue: slimeMove.attack
+                            action: ActionType::attack,
+                            ActionValue: slimeAction.attack
                         }
                     ))
                 );
@@ -194,20 +168,18 @@ mod actions {
         }
         
 
-        fn moved(ref world: IWorldDispatcher, direction: Direction) {
-            let player = get_caller_address();
+        // fn moved(ref world: IWorldDispatcher, direction: Direction) {
+        //     let player = get_caller_address();
 
-            let mut playerPosition = get!(world, player, (Player));
-            let newPosition = next_position(playerPosition.position, direction);
+        //     let mut playerPosition = get!(world, player, (Player));
+        //     let newPosition = next_position(playerPosition.position, direction);
 
-            assert(Map::is_valid_map_position(position: newPosition), 'Position outside map');
-            assert(Map::is_walkable_position(position: newPosition), 'Not walkable position');
+            
+        //     playerPosition.position = newPosition;
 
-            playerPosition.position = newPosition;
+        //     set!(world,(playerPosition));
 
-            set!(world,(playerPosition));
-
-            emit!(world,(Event::PositionAction(Moved { player, direction })));
-        }
+        //     emit!(world,(Event::PositionAction(Moved { player, direction })));
+        // }
     }
 }

@@ -1,0 +1,15 @@
+kind = "DojoModel"
+class_hash = "0x20e4c0cb03c44bc73e2b5a3841119b8d18a650665ca5add8939d8d8720fe0a7"
+original_class_hash = "0x20e4c0cb03c44bc73e2b5a3841119b8d18a650665ca5add8939d8d8720fe0a7"
+abi = "manifests/dev/abis/base/models/dojo_starter_models_counter_counter.json"
+name = "dojo_starter::models::counter::counter"
+
+[[members]]
+name = "entityId"
+type = "u32"
+key = true
+
+[[members]]
+name = "counter"
+type = "u32"
+key = false

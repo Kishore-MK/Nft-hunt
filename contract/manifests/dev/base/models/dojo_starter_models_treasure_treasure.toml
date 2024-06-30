@@ -1,0 +1,20 @@
+kind = "DojoModel"
+class_hash = "0x1e604a12a30bb5ace2ed806f8ccb7a9080c40a331d5e114c1c151adee61dcdc"
+original_class_hash = "0x1e604a12a30bb5ace2ed806f8ccb7a9080c40a331d5e114c1c151adee61dcdc"
+abi = "manifests/dev/abis/base/models/dojo_starter_models_treasure_treasure.json"
+name = "dojo_starter::models::treasure::treasure"
+
+[[members]]
+name = "player"
+type = "ContractAddress"
+key = true
+
+[[members]]
+name = "location"
+type = "Location"
+key = false
+
+[[members]]
+name = "claim"
+type = "TreasureStatus"
+key = false
