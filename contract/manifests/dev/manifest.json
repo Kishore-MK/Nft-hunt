@@ -1000,12 +1000,12 @@
       }
     ],
     "address": "0xb4079627ebab1cd3cf9fd075dda1ad2454a7a448bf659591f259efa2519b18",
-    "transaction_hash": "0x595502ab61cd6bd0c6e6ac35e87dcccc28c7b187f09bd61f0ba18976328086a",
+    "transaction_hash": "0x59f758955d5a54331f83a42417f212e26343b5cded3d19c9a664689a4c04407",
     "block_number": 3,
     "seed": "dojo_starter",
     "metadata": {
       "profile_name": "dev",
-      "rpc_url": "https://api.cartridge.gg/x/nftkat/katana/"
+      "rpc_url": "https://api.cartridge.gg/x/nfthunt/katana/"
     },
     "name": "dojo::world::world"
   },
@@ -1020,8 +1020,8 @@
     {
       "kind": "DojoContract",
       "address": "0x3610b797baec740e2fa25ae90b4a57d92b04f48a1fdbae1ae203eaf9723c1a0",
-      "class_hash": "0x4b60700d46a809adfac720b4eaac0217794cd30133ca0186767bd8b2dd0fc17",
-      "original_class_hash": "0x4b60700d46a809adfac720b4eaac0217794cd30133ca0186767bd8b2dd0fc17",
+      "class_hash": "0xf7d991fd28738f003a1dc9767d10d4b45dd149efb59f04bfe517885a1b59bb",
+      "original_class_hash": "0xf7d991fd28738f003a1dc9767d10d4b45dd149efb59f04bfe517885a1b59bb",
       "base_class_hash": "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46",
       "abi": [
         {
@@ -1085,6 +1085,28 @@
         },
         {
           "type": "enum",
+          "name": "dojo_starter::models::walk::Direction",
+          "variants": [
+            {
+              "name": "Left",
+              "type": "()"
+            },
+            {
+              "name": "Right",
+              "type": "()"
+            },
+            {
+              "name": "Up",
+              "type": "()"
+            },
+            {
+              "name": "Down",
+              "type": "()"
+            }
+          ]
+        },
+        {
+          "type": "enum",
           "name": "dojo_starter::models::player::Character",
           "variants": [
             {
@@ -1129,6 +1151,18 @@
           "type": "interface",
           "name": "dojo_starter::systems::actions::IActions",
           "items": [
+            {
+              "type": "function",
+              "name": "moved",
+              "inputs": [
+                {
+                  "name": "direction",
+                  "type": "dojo_starter::models::walk::Direction"
+                }
+              ],
+              "outputs": [],
+              "state_mutability": "external"
+            },
             {
               "type": "function",
               "name": "spawn",
@@ -1243,28 +1277,6 @@
               "name": "ActionValue",
               "type": "core::integer::u16",
               "kind": "data"
-            }
-          ]
-        },
-        {
-          "type": "enum",
-          "name": "dojo_starter::models::walk::Direction",
-          "variants": [
-            {
-              "name": "Left",
-              "type": "()"
-            },
-            {
-              "name": "Right",
-              "type": "()"
-            },
-            {
-              "name": "Up",
-              "type": "()"
-            },
-            {
-              "name": "Down",
-              "type": "()"
             }
           ]
         },
@@ -2910,10 +2922,15 @@
           "name": "score",
           "type": "u64",
           "key": false
+        },
+        {
+          "name": "position",
+          "type": "Position",
+          "key": false
         }
       ],
-      "class_hash": "0x68d83573a5260b386277316f7840a567ebc5a84f3c61a67063edc74c290355",
-      "original_class_hash": "0x68d83573a5260b386277316f7840a567ebc5a84f3c61a67063edc74c290355",
+      "class_hash": "0x5c4830204c4015bfba9aa800d2913a62d1bbc237a75310aaab50f4c6e50aef3",
+      "original_class_hash": "0x5c4830204c4015bfba9aa800d2913a62d1bbc237a75310aaab50f4c6e50aef3",
       "abi": [
         {
           "type": "impl",
@@ -3250,6 +3267,24 @@
         },
         {
           "type": "struct",
+          "name": "dojo_starter::models::position::Position",
+          "members": [
+            {
+              "name": "x",
+              "type": "core::integer::u32"
+            },
+            {
+              "name": "y",
+              "type": "core::integer::u32"
+            },
+            {
+              "name": "z",
+              "type": "core::integer::u32"
+            }
+          ]
+        },
+        {
+          "type": "struct",
           "name": "dojo_starter::models::player::Player",
           "members": [
             {
@@ -3263,6 +3298,10 @@
             {
               "name": "score",
               "type": "core::integer::u64"
+            },
+            {
+              "name": "position",
+              "type": "dojo_starter::models::position::Position"
             }
           ]
         },

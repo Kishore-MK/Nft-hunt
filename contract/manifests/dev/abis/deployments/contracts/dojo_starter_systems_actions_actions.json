@@ -60,6 +60,28 @@
   },
   {
     "type": "enum",
+    "name": "dojo_starter::models::walk::Direction",
+    "variants": [
+      {
+        "name": "Left",
+        "type": "()"
+      },
+      {
+        "name": "Right",
+        "type": "()"
+      },
+      {
+        "name": "Up",
+        "type": "()"
+      },
+      {
+        "name": "Down",
+        "type": "()"
+      }
+    ]
+  },
+  {
+    "type": "enum",
     "name": "dojo_starter::models::player::Character",
     "variants": [
       {
@@ -104,6 +126,18 @@
     "type": "interface",
     "name": "dojo_starter::systems::actions::IActions",
     "items": [
+      {
+        "type": "function",
+        "name": "moved",
+        "inputs": [
+          {
+            "name": "direction",
+            "type": "dojo_starter::models::walk::Direction"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
       {
         "type": "function",
         "name": "spawn",
@@ -218,28 +252,6 @@
         "name": "ActionValue",
         "type": "core::integer::u16",
         "kind": "data"
-      }
-    ]
-  },
-  {
-    "type": "enum",
-    "name": "dojo_starter::models::walk::Direction",
-    "variants": [
-      {
-        "name": "Left",
-        "type": "()"
-      },
-      {
-        "name": "Right",
-        "type": "()"
-      },
-      {
-        "name": "Up",
-        "type": "()"
-      },
-      {
-        "name": "Down",
-        "type": "()"
       }
     ]
   },

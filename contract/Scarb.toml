@@ -22,8 +22,8 @@ starknet = "2.6.3"
 initializer_class_hash = "0xbeef"
 
 [tool.dojo.env]
-rpc_url = "https://api.cartridge.gg/x/nftkat/katana/"
+rpc_url = "https://api.cartridge.gg/x/nfthunt/katana/"
 # Default account for katana with seed = 0
-account_address = "0x73256cb58827b3eef2249686ff7f74b3f0ba482d68c43dfb8668ee2f4220099"
-private_key = "0x363bdfb0967cb26339e238aa8b820d036738b50bc00e3f3f6bb6564c18346a9"
-world_address = "0x00b4079627ebab1cd3cf9fd075dda1ad2454a7a448bf659591f259efa2519b18"  # Update this line with your world address
+account_address = "0x3412227dd64be029af65be6877df411aa9165ec57bbce3cafbb5dd02be3c5ca"
+private_key = "0x7c811d902aa24f38335a7bd7372f012c1dcee4c1edc1bdef93d0982b58d42be"
+world_address = "0xb4079627ebab1cd3cf9fd075dda1ad2454a7a448bf659591f259efa2519b18"  # Update this line with your world address
