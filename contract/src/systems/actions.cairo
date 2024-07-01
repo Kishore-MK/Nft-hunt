@@ -7,7 +7,7 @@ use dojo::world::{IWorldDispatcher, IWorldDispatcherImpl, IWorldDispatcherTrait}
 
 #[dojo::interface]
 trait IActions{
-    // fn moved(ref world: IWorldDispatcher, direction: Direction);
+    fn moved(ref world: IWorldDispatcher, direction: Direction);
     fn spawn(ref world: IWorldDispatcher,character: Character);
     fn action(ref world: IWorldDispatcher,Action: ActionType, location: Location);
     
@@ -19,6 +19,7 @@ mod actions {
     use dojo_starter::models::{
         health::Health, player::{Player, Character},action::{Action, ActionType},game::{Game, GameStatus, GameStatusImplTrait}, counter::{Counter}, treasure::{Treasure,TreasureStatus,Location},walk::Direction
     };
+    use dojo_starter::models::position::{Position, next_position};
  
     // use dojo::world::{IWorldDispatcher, IWorldDispatcherImpl, IWorldDispatcherTrait};
 
@@ -69,12 +70,12 @@ mod actions {
                     healing = 25;
                 }
             }
-           
+           let pos= Position{x:12,y:24,z:0};
             let loc=Location{x:20,y:14,z:0};
             set!(
                 world,
                 (
-                    Player { player, character, score: playerStatus.score },
+                    Player { player, character, score: playerStatus.score, position:pos },
                     Game { player, entityId: gameCounter, status: GameStatus::InProgress },
                     Health { entityId: player, gameId: gameCounter, health: 100 },
                     Action { entityId: player, attack, healing },
@@ -168,18 +169,18 @@ mod actions {
         }
         
 
-        // fn moved(ref world: IWorldDispatcher, direction: Direction) {
-        //     let player = get_caller_address();
+        fn moved(ref world: IWorldDispatcher, direction: Direction) {
+            let player = get_caller_address();
 
-        //     let mut playerPosition = get!(world, player, (Player));
-        //     let newPosition = next_position(playerPosition.position, direction);
+            let mut playerPosition = get!(world, player, (Player));
+            let newPosition = next_position(playerPosition.position, direction);
 
             
-        //     playerPosition.position = newPosition;
+            playerPosition.position = newPosition;
 
-        //     set!(world,(playerPosition));
+            set!(world,(playerPosition));
 
-        //     emit!(world,(Event::PositionAction(Moved { player, direction })));
-        // }
+            emit!(world,(Event::PositionAction(Moved { player, direction })));
+        }
     }
 }

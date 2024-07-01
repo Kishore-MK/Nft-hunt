@@ -4,7 +4,7 @@ mod systems {
 }
 
 mod models { 
-
+    mod position;
     mod game;
     mod player;
     mod action;

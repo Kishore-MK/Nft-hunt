@@ -1,12 +1,13 @@
 use starknet::ContractAddress;
-use dojo_starter::models::walk::Direction;
+use dojo_starter::models::{walk::Direction,position::Position};
 #[derive(Copy, Drop, Serde)]
 #[dojo::model]
 struct Player {
     #[key]
     player: ContractAddress,
     character: Character,
-    score: u64
+    score: u64,
+    position:Position
     
 }
 
@@ -20,7 +21,7 @@ enum Character {
 impl CharacterIntoFelt252 of Into<Character, felt252> {
     fn into(self: Character) -> felt252 {
         match self {
-            Character::Hunter =>1,
+            Character::Hunter =>0,
         }
     }
 }

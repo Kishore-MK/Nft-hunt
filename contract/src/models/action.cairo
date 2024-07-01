@@ -18,8 +18,8 @@ enum ActionType {
 impl ActionTypeIntoFelt252 of Into<ActionType, felt252> {
     fn into(self: ActionType) -> felt252 {
         match self {
-            ActionType::attack => 1,
-            ActionType::healing => 2,
+            ActionType::attack => 0,
+            ActionType::healing => 1,
         }
     }
 }
